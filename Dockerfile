@@ -1,22 +1,16 @@
 FROM alpine:latest
-
-# လိုအပ်သော Tools များနှင့် Caddy (Web Server) သွင်းခြင်း
 RUN apk add --no-cache curl unzip caddy
-
 WORKDIR /app
 
-# Xray core ကို download ဆွဲခြင်း
+# Download Xray
 RUN curl -L -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip \
-    && unzip xray.zip \
-    && chmod +x xray \
-    && rm -f xray.zip
+    && unzip xray.zip && chmod +x xray && rm -f xray.zip
 
-# File များ copy ကူးခြင်း
-COPY config.json /app/config.json
-COPY index.html /app/index.html
+# Copy အားလုံးကို Root ထဲထည့်မယ်
+COPY . .
 
-# Port 8080 ကို အသုံးပြုမည်
 EXPOSE 8080
 
-# Caddy ကို နောက်ကွယ်ကပတ်ပြီး Xray ကိုပါ တစ်ခါတည်း run မည့် script
+# Caddy ကို port 8081 မှာ run ပြီး index.html ကိုပြမယ်
+# Xray က port 8080 ကနေ လက်ခံမယ်
 CMD caddy file-server --listen :8081 --root /app & ./xray -config config.json
