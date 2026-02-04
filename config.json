@@ -1,7 +1,7 @@
 {
   "inbounds": [
     {
-      "port": 10000,
+      "port": 7860,
       "protocol": "vless",
       "settings": {
         "clients": [{ "id": "f525e7b1-e7c4-449c-9dcb-a8a7c5b7a8ab" }],
